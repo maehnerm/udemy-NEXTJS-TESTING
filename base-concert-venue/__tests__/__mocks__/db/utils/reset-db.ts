@@ -4,7 +4,8 @@ import { filenames, writeJSONToFile } from "@/lib/db/db-utils";
 
 export const resetDB = async () => {
   // failsafe against resetting the production db!
-  const safeToReset = process.env.NODE_ENV === "test";
+  const safeToReset =
+    process.env.NODE_ENV === "test" || process.env.CYPRESS_baseUrl;
 
   if (!safeToReset) {
     console.log(

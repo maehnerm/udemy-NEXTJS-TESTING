@@ -1,7 +1,6 @@
 it("skips client-side bundle, confirming data from ISR cache", () => {
   // reference: https://glebbahmutov.com/blog/ssr-e2e/#removing-application-bundle
-  cy.task("db:reset")
-    .request("/shows")
+  cy.request("/shows")
     .its("body")
     .then((html) => {
       // remove the scripts, so they don't start automatically

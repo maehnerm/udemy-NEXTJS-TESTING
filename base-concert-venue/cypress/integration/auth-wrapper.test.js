@@ -101,3 +101,14 @@ it("runs the auth flow for a non-successful and nsuccessful login to users page"
   cy.findByRole("button", { name: /sign out/i }).should("exist");
   cy.findByRole("button", { name: /sign in/i }).should("not.exist");
 });
+
+it("redirects to sign-in for protected pages", () => {
+  cy.fixture("protected-pages.json").then((urls) => {
+    urls.forEach(($url) => {
+      cy.visit($url);
+
+      cy.findByLabelText(/email address/i).should("exist");
+      cy.findByLabelText(/password/i).should("exist");
+    });
+  });
+});

@@ -38,7 +38,7 @@ it("runs the auth flow for successful login to protected reservations page", () 
   cy.findByRole("button", { name: /sign in/i }).should("not.exist");
 });
 
-it("runs the auth flow for a non-successful and nsuccessful login to users page", () => {
+it("runs the auth flow for a non-successful and successful login to users page", () => {
   // visit the user page
   cy.task("db:reset").visit("/user");
 
@@ -111,4 +111,22 @@ it("redirects to sign-in for protected pages", () => {
       cy.findByLabelText(/password/i).should("exist");
     });
   });
+});
+
+it("does NOT show the sign-in page if already signed-in", () => {
+  cy.task("db:reset").signIn(
+    Cypress.env("TEST_USER_EMAIL"),
+    Cypress.env("TEST_PASSWORD")
+  );
+
+  // access the tickets page for the first show
+  cy.visit("/reservations/0");
+
+  // make sure there is no sign-in page
+  cy.findByRole("heading", { name: /sign in to your account/i }).should(
+    "not.exist"
+  );
+
+  // make sure the purchase button shows
+  cy.findByRole("button", { name: /purchase/i }).should("exist");
 });

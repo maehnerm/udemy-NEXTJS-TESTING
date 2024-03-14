@@ -14,6 +14,7 @@
 
 const { resetDB } = require("../../__tests__/__mocks__/db/utils/reset-db");
 const { addBand } = require("../../lib/features/bands/queries");
+const { addReservation } = require("../../lib/features/reservations/queries");
 
 /**
  * @type {Cypress.PluginConfig}
@@ -31,6 +32,8 @@ module.exports = (on, config) => {
   on("task", {
     "db:reset": () => resetDB().then(() => null),
     addBand: (newBand) => addBand(newBand).then(() => null),
+    addReservation: (newReservation) =>
+      addReservation(newReservation).then(() => null),
   });
 
   return config;
